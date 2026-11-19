@@ -33,7 +33,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "/start - شروع ربات\n"
         "/help - راهنما\n"
         "/id - نمایش شناسه\n"
-        "/admin - بررسی مدیر بودن\n"
+        "/admin - بررسی مدیر بودن"
     )
 
 
@@ -72,17 +72,17 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not update.message or not update.message.text:
         return
 
-    text = update.message.text.strip()
+    message_text = update.message.text.strip()
 
-    if text:
-        await update.message.reply_text(f"پیامت دریافت شد: {text}")
+    if message_text:
+        await update.message.reply_text(f"پیامت دریافت شد: {message_text}")
 
 
 async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE):
     logger.error("An error occurred", exc_info=context.error)
 
 
- def main():
+def main():
     if not TOKEN:
         raise RuntimeError("لطفاً متغیر محیطی BOT_TOKEN را تنظیم کنید.")
 
@@ -92,7 +92,9 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE):
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(CommandHandler("id", get_id))
     application.add_handler(CommandHandler("admin", check_admin))
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+    application.add_handler(
+        MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message)
+    )
 
     application.add_error_handler(error_handler)
 
